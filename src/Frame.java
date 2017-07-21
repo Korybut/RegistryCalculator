@@ -114,6 +114,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         }
         if(e.getSource() == mainMenu.getSave()){
             JFileChooser fileChooser = new JFileChooser();
+            //show frame chooser directory save file
         }
         if(e.getSource() == rightPanel.getButComboBox()){
             for(int i=0; i<4; i++) {
