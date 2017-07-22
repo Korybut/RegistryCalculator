@@ -29,18 +29,22 @@ public class RightPanel extends JComponent {
 
         add(butRand);
         butRand.setBounds(10,40,85,30);
+        butRand.setFocusPainted(false);
 
         add(butClear);
         butClear.setBounds(105,40,85,30);
+        butClear.setFocusPainted(false);
 
         add(butCalAll);
         butCalAll.setBounds(10,75,180,30);
+        butCalAll.setFocusPainted(false);
 
         add(boxListCalculate);
         boxListCalculate.setLocation(10,110);
 
         add(butComboBox);
         butComboBox.setBounds(105,110,85,20);
+        butComboBox.setFocusPainted(false);
     }
 
     public JButton getButRand(){
