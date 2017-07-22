@@ -26,6 +26,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
     StatusBar statusBar = new StatusBar();
 
     public Frame() throws FileNotFoundException{
+
         super("Rejestry - Kalkulator");
         setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
         pack();
@@ -34,6 +35,20 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         setSize(565,300);
         setResizable(false);
         setVisible(true);
+
+        /* FRAMES LOOKS LIKE WINDOWS */
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        SwingUtilities.updateComponentTreeUI(this);
 
         /* set whole block textFields */
         add(txtFields);
@@ -58,6 +73,8 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
 
         mainMenu.getExit().addActionListener(this);
         mainMenu.getSave().addActionListener(this);
+        mainMenu.getLoad().addActionListener(this);
+        mainMenu.getNewfile().addActionListener(this);
 
         add(statusBar);
         statusBar.setBounds(0,228,565,20);
@@ -112,9 +129,24 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
 
             }
         }
+        if(e.getSource() == mainMenu.getNewfile()){
+            if(JOptionPane.showOptionDialog(null,"Czy napewno chcesz zamknąć poprzedni projekt i stworzyć nowy?","Nowy plik",
+                    JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null) == 0){
+                for(int a=0; a<8; a++){
+                    for(int b=0; b<4; b++){
+                        if(a>1) txtFields.setValue("", a, b);
+                        else txtFields.setValue("0000", a, b);
+                    }
+                }
+            }
+        }
         if(e.getSource() == mainMenu.getSave()){
-            JFileChooser fileChooser = new JFileChooser();
-            //show frame chooser directory save file
+            EditFile editFile = new EditFile();
+            editFile.save(txtFields);
+        }
+        if(e.getSource() == mainMenu.getLoad()){
+            EditFile editFile = new EditFile();
+            txtFields = editFile.open(txtFields);
         }
         if(e.getSource() == rightPanel.getButComboBox()){
             for(int i=0; i<4; i++) {
