@@ -33,13 +33,28 @@ public class EditFile {
         );
     }
 
-    public void save(TextFieldsArray textFldArr) {
+    public void save(TextFieldsArray textFldArr, StatusBar statbr) {
+        if(statbr.getFileNameStatus().equals("currently file is not saved ")){
+            //if current file is not save, default save is set on desktop directory and untitled name file.
+            File file = new File(System.getProperty("user.home")+"\\Desktop\\untitled");
+            fileChooser.setSelectedFile(file);
+        }
+        else {
+            File fileName = new File(System.getProperty(
+                    "user.home")+"\\Desktop\\"+statbr.getFileNameStatus().substring(0,statbr.getFileNameStatus().length()-5));
+            fileChooser.setSelectedFile(fileName);
+        }
         int retrival = fileChooser.showSaveDialog(null);
         if(retrival == JFileChooser.APPROVE_OPTION){
-            File file = new File(fileChooser.getSelectedFile()+".hex");
+            File file;
+            if(!fileChooser.getSelectedFile().toString().contains(".hex")){
+                file = new File(fileChooser.getSelectedFile()+".hex");
+            }
+            else{
+                file = new File(fileChooser.getSelectedFile()+"");
+            }
             try{
                 FileWriter writer = new FileWriter(file);
-                System.out.println("Test save file");
                 for(int a=0; a<8; a++){
                     for(int b=0; b<4; b++){
                         writer.write(textFldArr.getValue(a,b) + "\r\n");
@@ -49,10 +64,18 @@ public class EditFile {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //set saved file name to StatusBar label
+            //string must be cutting, because getSelectedFile give all directory, example C:\\Users\Desktop\file.hex...
+            String string = fileChooser.getSelectedFile()+"";
+            string = string.substring(fileChooser.getCurrentDirectory().toString().length()+1);
+            if(string.contains(".hex")){
+               string = string.substring(0,string.length()-4);
+            }
+            statbr.setFileNameStatus(string+".hex ");
         }
     }
 
-    public TextFieldsArray open(TextFieldsArray textFldArr){
+    public TextFieldsArray open(TextFieldsArray textFldArr, StatusBar statbr){
         int retrival = fileChooser.showOpenDialog(null);
         if(retrival == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();
@@ -69,6 +92,12 @@ public class EditFile {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            String string = fileChooser.getSelectedFile()+"";
+            string = string.substring(fileChooser.getCurrentDirectory().toString().length()+1);
+            if(string.contains(".hex")){
+                string = string.substring(0,string.length()-4);
+            }
+            statbr.setFileNameStatus(string+".hex ");
         }
         return textFldArr;
     }

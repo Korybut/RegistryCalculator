@@ -75,6 +75,10 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         mainMenu.getSave().addActionListener(this);
         mainMenu.getLoad().addActionListener(this);
         mainMenu.getNewfile().addActionListener(this);
+        mainMenu.getClear().addActionListener(this);
+        mainMenu.getRandom().addActionListener(this);
+        mainMenu.getExchange().addActionListener(this);
+        mainMenu.getShowHideStatusBar().addActionListener(this);
 
         add(statusBar);
         statusBar.setBounds(0,228,565,20);
@@ -101,14 +105,21 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == rightPanel.getButRand()){
+        if(e.getSource() == rightPanel.getButRand() || e.getSource() == mainMenu.getRandom()){
             for(int a=0; a<2; a++){
                 for(int b=0; b<4; b++){
                     txtFields.setValue(new RandomizeHex().getRandomHex(), a, b);
                 }
             }
         }
-        if(e.getSource() == rightPanel.getButClear()){
+        if(e.getSource() == mainMenu.getExchange()){
+            for(int b=0; b<4; b++){
+                String temp = txtFields.getValue(0, b);
+                txtFields.setValue(txtFields.getValue(1, b), 0, b);
+                txtFields.setValue(temp, 1, b);
+            }
+        }
+        if(e.getSource() == rightPanel.getButClear() || e.getSource() == mainMenu.getClear()){
             for(int a=0; a<8; a++){
                 for(int b=0; b<4; b++){
                     if(a>1) txtFields.setValue("", a, b);
@@ -129,6 +140,16 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
 
             }
         }
+        if(e.getSource() == mainMenu.getShowHideStatusBar()){
+            if(statusBar.isVisible()) {
+                statusBar.setVisible(false);
+                setSize(565,280);
+            }
+            else {
+                statusBar.setVisible(true);
+                setSize(565,300);
+            }
+        }
         if(e.getSource() == mainMenu.getNewfile()){
             if(JOptionPane.showOptionDialog(null,"Czy napewno chcesz zamknąć poprzedni projekt i stworzyć nowy?","Nowy plik",
                     JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null) == 0){
@@ -138,15 +159,16 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
                         else txtFields.setValue("0000", a, b);
                     }
                 }
+                statusBar.setFileNameStatus("currently file is not saved ");
             }
         }
         if(e.getSource() == mainMenu.getSave()){
             EditFile editFile = new EditFile();
-            editFile.save(txtFields);
+            editFile.save(txtFields, statusBar);
         }
         if(e.getSource() == mainMenu.getLoad()){
             EditFile editFile = new EditFile();
-            txtFields = editFile.open(txtFields);
+            txtFields = editFile.open(txtFields, statusBar);
         }
         if(e.getSource() == rightPanel.getButComboBox()){
             for(int i=0; i<4; i++) {

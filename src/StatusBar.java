@@ -11,7 +11,7 @@ public class StatusBar extends JComponent {
     private JLabel modeStatus = new JLabel(" Status trybu");
     private JLabel emptyStatus = new JLabel();
     private JLabel indexFieldStatus = new JLabel("0:0", SwingConstants.CENTER);
-    private JLabel fileNameStatus = new JLabel("brak pliku tekstowego .txt ", SwingConstants.RIGHT);
+    private JLabel fileNameStatus = new JLabel("currently file is not saved ", SwingConstants.RIGHT);
 
     public StatusBar() {
         setLayout(null);
@@ -45,5 +45,13 @@ public class StatusBar extends JComponent {
 
     public void setIndexFieldStatus(String txt) {
         indexFieldStatus.setText(txt);
+    }
+
+    public String getFileNameStatus() {
+        return fileNameStatus.getText();
+    }
+
+    public void setFileNameStatus(String name) {
+        fileNameStatus.setText(name);
     }
 }
