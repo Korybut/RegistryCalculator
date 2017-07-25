@@ -15,6 +15,22 @@ public class RandomizeHex {
         }
     }
 
+    public RandomizeHex(int val){
+        Random random = new Random();
+        if(val == 0){
+            randVal = Integer.toHexString(random.nextInt(32767));
+            while(randVal.length()<4){
+                randVal = "0" + randVal;
+            }
+        }
+        else if(val == 1) {
+            randVal = Integer.toHexString(random.nextInt(32767)+ 32768);
+            while (randVal.length() < 4) {
+                randVal = "0" + randVal;
+            }
+        }
+    }
+
     public String getRandomHex(){
         return randVal.toUpperCase();
     }

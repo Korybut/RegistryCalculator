@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,6 +26,8 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
     /* status bar */
     StatusBar statusBar = new StatusBar();
 
+
+
     public Frame() throws FileNotFoundException{
 
         super("Rejestry - Kalkulator");
@@ -35,6 +38,8 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         setSize(565,300);
         setResizable(false);
         setVisible(true);
+
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
 
         /* FRAMES LOOKS LIKE WINDOWS */
         try {
@@ -79,11 +84,19 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         mainMenu.getRandom().addActionListener(this);
         mainMenu.getExchange().addActionListener(this);
         mainMenu.getShowHideStatusBar().addActionListener(this);
+        mainMenu.getCalculateAll().addActionListener(this);
+        mainMenu.getOnlyAdd().addActionListener(this);
+        mainMenu.getOnlySub().addActionListener(this);
+        mainMenu.getOnlyPositive().addActionListener(this);
+        mainMenu.getOnlyNegative().addActionListener(this);
+        mainMenu.getNewParam().addActionListener(this);
 
         add(statusBar);
         statusBar.setBounds(0,228,565,20);
 
     }
+
+
 
     private boolean checkInsertValue(int i){
         int errorThis = -1;
@@ -112,6 +125,32 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
                 }
             }
         }
+        if(e.getSource() == mainMenu.getOnlyPositive()){
+            for(int a=0; a<2; a++){
+                for(int b=0; b<4; b++){
+                    txtFields.setValue(new RandomizeHex(0).getRandomHex(), a, b);
+                }
+            }
+        }
+        if(e.getSource() == mainMenu.getOnlyNegative()){
+            for(int a=0; a<2; a++){
+                for(int b=0; b<4; b++){
+                    txtFields.setValue(new RandomizeHex(1).getRandomHex(), a, b);
+                }
+            }
+        }
+        if(e.getSource() == mainMenu.getNewParam()){
+            for(int b=0; b<4; b++){
+                txtFields.setValue(txtFields.getValue(2, b), 0, b);
+                txtFields.setValue(txtFields.getValue(5, b), 1, b);
+            }
+            for(int a=2; a<8; a++){
+                for(int b=0; b<4; b++){
+                    if(a>1) txtFields.setValue("", a, b);
+                    else txtFields.setValue("0000", a, b);
+                }
+            }
+        }
         if(e.getSource() == mainMenu.getExchange()){
             for(int b=0; b<4; b++){
                 String temp = txtFields.getValue(0, b);
@@ -127,12 +166,32 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
                 }
             }
         }
-        if(e.getSource() == rightPanel.getButCalAll()){
+        if(e.getSource() == rightPanel.getButCalAll() || e.getSource() == mainMenu.getCalculateAll()){
             for(int i=0; i<4; i++){
                 if(checkInsertValue(i)){
                     txtFields.setValue(regOp.hexAddw(txtFields.getValue(0,i),txtFields.getValue(1,i)),2,i);
                     txtFields.setValue(regOp.hexAddsw(txtFields.getValue(0,i),txtFields.getValue(1,i)),3,i);
                     txtFields.setValue(regOp.hexAddusw(txtFields.getValue(0,i),txtFields.getValue(1,i)),4,i);
+                    txtFields.setValue(regOp.hexSubw(txtFields.getValue(0,i),txtFields.getValue(1,i)),5,i);
+                    txtFields.setValue(regOp.hexSubsw(txtFields.getValue(0,i),txtFields.getValue(1,i)),6,i);
+                    txtFields.setValue(regOp.hexSubusw(txtFields.getValue(0,i),txtFields.getValue(1,i)),7,i);
+                }
+
+            }
+        }
+        if(e.getSource() == mainMenu.getOnlyAdd()){
+            for(int i=0; i<4; i++){
+                if(checkInsertValue(i)){
+                    txtFields.setValue(regOp.hexAddw(txtFields.getValue(0,i),txtFields.getValue(1,i)),2,i);
+                    txtFields.setValue(regOp.hexAddsw(txtFields.getValue(0,i),txtFields.getValue(1,i)),3,i);
+                    txtFields.setValue(regOp.hexAddusw(txtFields.getValue(0,i),txtFields.getValue(1,i)),4,i);
+                }
+
+            }
+        }
+        if(e.getSource() == mainMenu.getOnlySub()){
+            for(int i=0; i<4; i++){
+                if(checkInsertValue(i)){
                     txtFields.setValue(regOp.hexSubw(txtFields.getValue(0,i),txtFields.getValue(1,i)),5,i);
                     txtFields.setValue(regOp.hexSubsw(txtFields.getValue(0,i),txtFields.getValue(1,i)),6,i);
                     txtFields.setValue(regOp.hexSubusw(txtFields.getValue(0,i),txtFields.getValue(1,i)),7,i);
@@ -200,7 +259,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
             }
         }
         if(e.getSource() == mainMenu.getExit()){
-            if(JOptionPane.showOptionDialog(null, "Czy napewno chcesz zakończyć program?", "Zamknij",
+            if(JOptionPane.showOptionDialog(null, "Czy napewno chcesz zakończyć działanie programu?", "Zamknij",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == 0) exit(0);
         }
     }
