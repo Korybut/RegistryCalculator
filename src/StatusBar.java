@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class StatusBar extends JComponent {
 
-    private JLabel modeStatus = new JLabel(" Status trybu");
+    private JLabel modeStatus = new JLabel(" Tryb: kalkulator");
     private JLabel emptyStatus = new JLabel();
     private JLabel indexFieldStatus = new JLabel("0:0", SwingConstants.CENTER);
     private JLabel fileNameStatus = new JLabel("currently file is not saved ", SwingConstants.RIGHT);

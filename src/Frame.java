@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 
 import static java.lang.System.exit;
@@ -11,7 +8,7 @@ import static java.lang.System.exit;
 /**
  * Created by Korybut on 11.07.2017.
  */
-public class Frame extends JFrame implements ActionListener, MouseListener {
+public class Frame extends JFrame implements ActionListener, MouseListener, WindowListener {
 
     HEXArray hexArray = new HEXArray();
     RegistryOperation regOp = new RegistryOperation();
@@ -31,7 +28,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
     public Frame() throws FileNotFoundException{
 
         super("Rejestry - Kalkulator");
-        setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(Frame.DO_NOTHING_ON_CLOSE);
         pack();
         setLayout(null);
         setLocation(getSize().width/2+340, getSize().height/2+200);
@@ -40,6 +37,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         setVisible(true);
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
+        this.addWindowListener(this);
 
         /* FRAMES LOOKS LIKE WINDOWS */
         try {
@@ -90,6 +88,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         mainMenu.getOnlyPositive().addActionListener(this);
         mainMenu.getOnlyNegative().addActionListener(this);
         mainMenu.getNewParam().addActionListener(this);
+        mainMenu.getAbout().addActionListener(this);
 
         add(statusBar);
         statusBar.setBounds(0,228,565,20);
@@ -258,6 +257,9 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
                 }
             }
         }
+        if(e.getSource() == mainMenu.getAbout()){
+            AboutFrame aboutFrame = new AboutFrame();
+        }
         if(e.getSource() == mainMenu.getExit()){
             if(JOptionPane.showOptionDialog(null, "Czy napewno chcesz zakończyć działanie programu?", "Zamknij",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == 0) exit(0);
@@ -292,6 +294,46 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if(e.getSource() == this){
+            if(JOptionPane.showOptionDialog(null, "Czy napewno chcesz zakończyć działanie programu?", "Zamknij",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == 0){
+                exit(0);
+            }
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
 
     }
 }

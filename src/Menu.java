@@ -97,7 +97,7 @@ public class Menu extends JMenuBar {
         options.add(newParam);
         Image newParamIcon = new ImageIcon(this.getClass().getResource("/images/newparam.png")).getImage()
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
-        newParam.setIcon(new ImageIcon(newfileIcon));
+        newParam.setIcon(new ImageIcon(newParamIcon));
         newParam.setAccelerator(KeyStroke.getKeyStroke("ctrl Q"));
         Image positiveIcon = new ImageIcon(this.getClass().getResource("/images/positive.png")).getImage()
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
