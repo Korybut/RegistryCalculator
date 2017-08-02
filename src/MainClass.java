@@ -6,14 +6,11 @@ import java.io.FileNotFoundException;
  */
 public class MainClass {
     public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new Frame();
-               } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                new Frame();
+           } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         });
     }
