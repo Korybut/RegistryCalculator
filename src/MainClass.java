@@ -11,7 +11,7 @@ public class MainClass {
             public void run() {
                 try {
                     new Frame();
-                } catch (FileNotFoundException e) {
+               } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }

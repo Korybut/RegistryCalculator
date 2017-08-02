@@ -4,13 +4,7 @@ import java.awt.*;
 /**
  * Created by Korybut on 15.07.2017.
  */
-public class Menu extends JMenuBar {
-
-    private JMenu file = new JMenu("Plik");
-    private JMenu edit = new JMenu("Edycja");
-    private JMenu view = new JMenu("Widok");
-    private JMenu options = new JMenu("Opcje");
-    private JMenu help = new JMenu("Pomoc");
+class Menu extends JMenuBar {
 
     private JMenuItem newfile = new JMenuItem("Nowy plik");
     private JMenuItem save = new JMenuItem("Zapisz do pliku");
@@ -22,9 +16,6 @@ public class Menu extends JMenuBar {
     private JMenuItem exchange = new JMenuItem("Zamień miejscami");
 
 
-    private JMenu mode = new JMenu("Tryb...");
-    private JMenuItem modeCalculator = new JMenuItem("Kalkulator");
-    private JMenuItem modeTesterHex = new JMenuItem("Tester Hex");
     private JMenuItem showHideStatusBar = new JMenuItem("Pokaż pasek stanu");
 
     private JMenuItem calculateAll = new JMenuItem("Oblicz wszystko");
@@ -34,16 +25,17 @@ public class Menu extends JMenuBar {
     private JMenuItem onlyPositive = new JMenuItem("Losowe parametry dodatnie");
     private JMenuItem onlyNegative = new JMenuItem("Losowe parametry ujemne");
 
-    private JMenuItem helper = new JMenuItem("Pomoc");
-    private JMenuItem checkUpdate = new JMenuItem("Sprawdź aktualizację");
-    private JMenuItem about = new JMenuItem("O programie");
+    Menu(){
 
-    public Menu(){
-
+        JMenu file = new JMenu("Plik");
         add(file);
+        JMenu edit = new JMenu("Edycja");
         add(edit);
+        JMenu view = new JMenu("Widok");
         add(view);
+        JMenu options = new JMenu("Opcje");
         add(options);
+        JMenu help = new JMenu("Pomoc");
         add(help);
 
         file.add(newfile);
@@ -80,9 +72,12 @@ public class Menu extends JMenuBar {
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
         exchange.setIcon(new ImageIcon(exchangeIcon));
 
+        JMenu mode = new JMenu("Tryb...");
         view.add(mode);
+        JMenuItem modeCalculator = new JMenuItem("Kalkulator");
         mode.add(modeCalculator);
         modeCalculator.setEnabled(false);
+        JMenuItem modeTesterHex = new JMenuItem("Tester Hex");
         mode.add(modeTesterHex);
         view.add(showHideStatusBar);
 
@@ -108,90 +103,50 @@ public class Menu extends JMenuBar {
         options.add(onlyNegative);
         onlyNegative.setIcon(new ImageIcon(negativeIcon));
 
+        JMenuItem helper = new JMenuItem("Pomoc");
         help.add(helper);
         Image aboutIcon = new ImageIcon(this.getClass().getResource("/images/helper.png")).getImage()
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        JMenuItem about = new JMenuItem("O programie");
         about.setIcon(new ImageIcon(aboutIcon));
         help.add(about);
+
+        about.addActionListener(e -> new AboutFrame());
     }
 
-    public JMenuItem getNewfile() {
+    void setTextFieldOfItems(TextFieldsArray t){
+        onlyPositive.addActionListener(e -> t.setOnlyPositive());
+        onlyNegative.addActionListener(e -> t.setOnlyNegative());
+        newParam.addActionListener(e -> t.setNewParameters());
+        exchange.addActionListener(e -> t.exchange());
+        calculateAll.addActionListener(e -> t.calculateAll());
+        onlyAdd.addActionListener(e -> t.calculateOnlyAdd());
+        onlySub.addActionListener(e -> t.calculateOnlySub());
+        random.addActionListener(e -> t.setRandom());
+        clear.addActionListener(e -> t.clear());
+    }
+
+    JMenuItem getNewfile() {
         return newfile;
     }
 
-    public JMenuItem getSave() {
-        return save;
+    void save(TextFieldsArray t, StatusBar sb) {
+        save.addActionListener(e -> {
+            EditFile editFile = new EditFile();
+            editFile.save(t, sb);
+        });
     }
 
-    public JMenuItem getLoad() {
+    JMenuItem getLoad() {
         return load;
     }
 
-    public JMenuItem getExit() {
+    JMenuItem getExit() {
         return exit;
     }
 
-    public JMenuItem getClear() {
-        return clear;
-    }
-
-    public JMenuItem getRandom() {
-        return random;
-    }
-
-    public JMenuItem getExchange() {
-        return exchange;
-    }
-
-    public JMenuItem getMode() {
-        return mode;
-    }
-
-    public JMenuItem getModeCalculator() {
-        return modeCalculator;
-    }
-
-    public JMenuItem getModeTesterHex() {
-        return modeTesterHex;
-    }
-
-    public JMenuItem getShowHideStatusBar() {
+    JMenuItem getShowHideStatusBar() {
         return showHideStatusBar;
     }
 
-    public JMenuItem getCalculateAll() {
-        return calculateAll;
-    }
-
-    public JMenuItem getOnlyAdd() {
-        return onlyAdd;
-    }
-
-    public JMenuItem getOnlySub() {
-        return onlySub;
-    }
-
-    public JMenuItem getNewParam() {
-        return newParam;
-    }
-
-    public JMenuItem getOnlyPositive() {
-        return onlyPositive;
-    }
-
-    public JMenuItem getOnlyNegative() {
-        return onlyNegative;
-    }
-
-    public JMenuItem getHelper() {
-        return helper;
-    }
-
-    public JMenuItem getCheckUpdate() {
-        return checkUpdate;
-    }
-
-    public JMenuItem getAbout() {
-        return about;
-    }
 }

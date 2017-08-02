@@ -5,15 +5,15 @@
  * - sub
  * - checking overload (up/down)
  */
-public class RegistryOperation {
+class RegistryOperation {
 
-    public RegistryOperation(){
+    RegistryOperation(){
     }
 
     // values parameters always be in String type - because return value must be cutting to 16 bytes.
 
     // sum last four rightmost numbers
-    public String hexAddw(String a, String b){
+    String hexAddw(String a, String b){
         // string parameters to Integer, next summary to HexString
         String result = Integer.toHexString(Integer.parseInt(a, 16) + Integer.parseInt(b, 16));
         result = result.toUpperCase();
@@ -26,7 +26,7 @@ public class RegistryOperation {
     }
 
     // sum last four rightmost numbers - unsigned
-    public String hexAddusw(String a, String b){
+    String hexAddusw(String a, String b){
         // string parameters to Integer, next summary to HexString
         String result = Integer.toHexString(Integer.parseInt(a, 16) + Integer.parseInt(b, 16));
         result = result.toUpperCase();
@@ -40,7 +40,7 @@ public class RegistryOperation {
     }
 
     // sum last four rightmost numbers with sign
-    public String hexAddsw(String a, String b){
+    String hexAddsw(String a, String b){
         // string parameters to Integer, next summary to HexString
         String result = Integer.toHexString(Integer.parseInt(a, 16) + Integer.parseInt(b, 16));
         result = result.toUpperCase();
@@ -66,7 +66,7 @@ public class RegistryOperation {
     }
 
     // substract last four rightmost numbers
-    public String hexSubw(String a, String b){
+    String hexSubw(String a, String b){
         String result = Integer.toHexString(Integer.parseInt(a,16) - Integer.parseInt(b,16));
         result = result.toUpperCase();
         if(result.length()>4) result = result.substring(result.length()-4);
@@ -77,7 +77,7 @@ public class RegistryOperation {
     }
 
     // substract last four rightmost numbers - unsigned
-    public String hexSubusw(String a, String b){
+    String hexSubusw(String a, String b){
         String result = Integer.toHexString(Integer.parseInt(a,16) - Integer.parseInt(b,16));
         result = result.toUpperCase();
         if(Integer.parseInt(a,16)<=Integer.parseInt(b,16)) return "0000";
@@ -89,7 +89,7 @@ public class RegistryOperation {
     }
 
     // substract last four rightmost numbers with sign
-    public String hexSubsw(String a, String b){
+    String hexSubsw(String a, String b){
         String result = Integer.toHexString(Integer.parseInt(a,16) - Integer.parseInt(b,16));
         result = result.toUpperCase();
         if(result.length()>4) result = result.substring(result.length()-4);

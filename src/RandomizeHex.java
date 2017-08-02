@@ -3,11 +3,11 @@ import java.util.Random;
 /**
  * Created by Korybut on 15.07.2017.
  */
-public class RandomizeHex {
+class RandomizeHex {
 
     String randVal = "";
 
-    public RandomizeHex(){
+    RandomizeHex(){
         Random random = new Random();
         randVal = Integer.toHexString(random.nextInt(65535));
         while(randVal.length()<4){
@@ -15,7 +15,7 @@ public class RandomizeHex {
         }
     }
 
-    public RandomizeHex(int val){
+    RandomizeHex(int val){
         Random random = new Random();
         if(val == 0){
             randVal = Integer.toHexString(random.nextInt(32767));
@@ -31,8 +31,6 @@ public class RandomizeHex {
         }
     }
 
-    public String getRandomHex(){
-        return randVal.toUpperCase();
-    }
+    String getRandomHex(){ return randVal.toUpperCase(); }
 
 }

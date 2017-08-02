@@ -6,23 +6,23 @@ import java.awt.*;
 /**
  * Created by Korybut on 18.07.2017.
  */
-public class StatusBar extends JComponent {
+class StatusBar extends JComponent {
 
-    private JLabel modeStatus = new JLabel(" Tryb: kalkulator");
-    private JLabel emptyStatus = new JLabel();
     private JLabel indexFieldStatus = new JLabel("0:0", SwingConstants.CENTER);
     private JLabel fileNameStatus = new JLabel("currently file is not saved ", SwingConstants.RIGHT);
 
-    public StatusBar() {
+    StatusBar() {
         setLayout(null);
         Border barBorder = new EtchedBorder(EtchedBorder.RAISED);
         Font barFont = new Font("Arial", Font.BOLD, 11);
 
+        JLabel modeStatus = new JLabel(" Tryb: kalkulator");
         add(modeStatus);
         modeStatus.setFont(barFont);
         modeStatus.setBounds(2,0,100,18);
         modeStatus.setBorder(barBorder);
 
+        JLabel emptyStatus = new JLabel();
         add(emptyStatus);
         emptyStatus.setBounds(104,0,200,18);
         emptyStatus.setBorder(barBorder);
@@ -39,19 +39,15 @@ public class StatusBar extends JComponent {
 
     }
 
-    public void setModeStatus(String txt) {
-        modeStatus.setText(txt);
-    }
+    //public void setModeStatus(String txt) { modeStatus.setText(txt); }
 
-    public void setIndexFieldStatus(String txt) {
-        indexFieldStatus.setText(txt);
-    }
+    void setIndexFieldStatus(String txt) { indexFieldStatus.setText(txt); }
 
-    public String getFileNameStatus() {
+    String getFileNameStatus() {
         return fileNameStatus.getText();
     }
 
-    public void setFileNameStatus(String name) {
+    void setFileNameStatus(String name) {
         fileNameStatus.setText(name);
     }
 }

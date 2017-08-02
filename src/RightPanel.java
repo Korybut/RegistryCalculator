@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by Korybut on 15.07.2017.
  */
-public class RightPanel extends JComponent {
+class RightPanel extends JComponent {
 
     JLabel titleMode = new JLabel("tryb: Kalkulator", SwingConstants.CENTER);
 
@@ -17,7 +17,7 @@ public class RightPanel extends JComponent {
     /* JComboBox */
     BoxListCalculate boxListCalculate = new BoxListCalculate();
 
-    public RightPanel(){
+    RightPanel(){
         setLayout(null);
         setSize(200,195);
         setBorder(new EtchedBorder());
@@ -47,25 +47,35 @@ public class RightPanel extends JComponent {
         butComboBox.setFocusPainted(false);
     }
 
-    public JButton getButRand(){
-        return butRand;
+    void setRandom(TextFieldsArray t){
+        butRand.addActionListener(e -> {
+            t.setRandom();
+        });
     }
 
-    public JButton getButClear(){
-        return butClear;
+    void clear(TextFieldsArray t){
+        butClear.addActionListener(e -> {
+            t.clear();
+        });
     }
 
-    public JButton getButCalAll(){
-        return butCalAll;
+    void calculateAll(TextFieldsArray t){
+        butCalAll.addActionListener(e -> {
+            t.calculateAll();
+        });
     }
 
-    public JButton getButComboBox() { return butComboBox; }
+    void calculateFromComboBox(TextFieldsArray t) {
+        butComboBox.addActionListener(e -> {
+            t.comboBoxCalculate(getBoxListCalculate().getSelectedIndex());
+        });
+    }
 
-    public BoxListCalculate getBoxListCalculate() {
+    private BoxListCalculate getBoxListCalculate() {
         return boxListCalculate;
     }
 
-    public JLabel getTitleMode() {
+    /*public JLabel getTitleMode() {
         return titleMode;
-    }
+    }*/
 }

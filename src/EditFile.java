@@ -9,11 +9,11 @@ import java.util.Scanner;
 /**
  * Created by Korybut on 21.07.2017.
  */
-public class EditFile {
+class EditFile {
 
     private JFileChooser fileChooser = new JFileChooser();
 
-    public EditFile(){
+    EditFile() {
         fileChooser.setFileFilter(
                 new FileFilter() {
                     @Override
@@ -33,7 +33,7 @@ public class EditFile {
         );
     }
 
-    public void save(TextFieldsArray textFldArr, StatusBar statbr) {
+    void save(TextFieldsArray textFldArr, StatusBar statbr) {
         if(statbr.getFileNameStatus().equals("currently file is not saved ")){
             //if current file is not save, default save is set on desktop directory and untitled name file.
             File file = new File(System.getProperty("user.home")+"\\Desktop\\untitled");
@@ -75,7 +75,7 @@ public class EditFile {
         }
     }
 
-    public TextFieldsArray open(TextFieldsArray textFldArr, StatusBar statbr){
+    TextFieldsArray open(TextFieldsArray textFldArr, StatusBar statbr){
         int retrival = fileChooser.showOpenDialog(null);
         if(retrival == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();

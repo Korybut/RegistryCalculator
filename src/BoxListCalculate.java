@@ -3,9 +3,9 @@ import javax.swing.*;
 /**
  * Created by Korybut on 17.07.2017.
  */
-public class BoxListCalculate extends JComboBox {
+class BoxListCalculate extends JComboBox {
 
-    public BoxListCalculate() {
+    BoxListCalculate() {
         setSize(90,20);
 
         addItem("paddw");
@@ -14,6 +14,5 @@ public class BoxListCalculate extends JComboBox {
         addItem("psubw");
         addItem("psubsw");
         addItem("psubusw");
-
     }
 }
