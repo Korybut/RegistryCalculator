@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.util.ResourceBundle;
 
 import static java.lang.System.exit;
 
@@ -21,11 +22,11 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
     /* status bar */
     StatusBar statusBar = new StatusBar();
 
-
+    private ResourceBundle bundle = Localization.bundle;
 
     public Frame() throws FileNotFoundException{
 
-        super("Rejestry - Kalkulator");
+        super("Registry Calculator");
         setDefaultCloseOperation(Frame.DO_NOTHING_ON_CLOSE);
         pack();
         setLayout(null);
@@ -75,16 +76,15 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
 
         add(statusBar);
         statusBar.setBounds(0,228,565,20);
-
     }
 
     private void closeFrame(){
-        if(JOptionPane.showOptionDialog(null, "Czy napewno chcesz zakończyć działanie programu?", "Zamknij",
+        if(JOptionPane.showOptionDialog(null, bundle.getString("close_frame"), bundle.getString("close"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == 0) exit(0);
     }
 
     private void createNewFile(){
-        if(JOptionPane.showOptionDialog(null,"Czy napewno chcesz zamknąć poprzedni projekt i stworzyć nowy?","Nowy plik",
+        if(JOptionPane.showOptionDialog(null,bundle.getString("create_newfile"),bundle.getString("newfile"),
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null) == 0){
             for(int a=0; a<8; a++){
                 for(int b=0; b<4; b++){
@@ -92,7 +92,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
                     else txtFields.setValue("0000", a, b);
                 }
             }
-            statusBar.setFileNameStatus("currently file is not saved ");
+            statusBar.setFileNameStatus(bundle.getString("stat_notsave"));
         }
     }
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Scanner;
  */
 class EditFile {
 
+    ResourceBundle bundle = Localization.bundle;
     private JFileChooser fileChooser = new JFileChooser();
 
     EditFile() {
@@ -34,7 +36,7 @@ class EditFile {
     }
 
     void save(TextFieldsArray textFldArr, StatusBar statbr) {
-        if(statbr.getFileNameStatus().equals("currently file is not saved ")){
+        if(statbr.getFileNameStatus().equals(bundle.getString("stat_notsave"))){
             //if current file is not save, default save is set on desktop directory and untitled name file.
             File file = new File(System.getProperty("user.home")+"\\Desktop\\untitled");
             fileChooser.setSelectedFile(file);
@@ -85,7 +87,6 @@ class EditFile {
                     for(int b=0; b<4; b++){
                         if(!scanner.hasNextLine()) break;
                         textFldArr.setValue(scanner.nextLine(), a, b);
-                        System.out.println("wczytalem " + a + ", " + b);
                     }
                 }
                 scanner.close();

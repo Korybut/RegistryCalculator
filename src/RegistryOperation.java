@@ -58,11 +58,6 @@ class RegistryOperation {
         else if((aa>32767 & bb>32767) & rs<32768) return "8000";
         else if((aa>32767 & bb>32767) & (rs<aa & rs<bb)) return "8000";
         else return result;
-
-        /*if((Integer.parseInt(a,16)<32768 & Integer.parseInt(a,16)<32768) & Integer.parseInt(result,16)>32767) return "7FFF";
-        else if((Integer.parseInt(a,16)>32767 & Integer.parseInt(b,16)>32767) & Integer.parseInt(result,16)<32768) return "8000";
-        else if(result.length()>4) return result.substring(result.length()-4);
-        else return result;*/
     }
 
     // substract last four rightmost numbers

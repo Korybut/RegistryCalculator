@@ -1,29 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * Created by Korybut on 15.07.2017.
  */
 class Menu extends JMenuBar {
 
-    private JMenuItem newfile = new JMenuItem("Nowy plik");
-    private JMenuItem save = new JMenuItem("Zapisz do pliku");
-    private JMenuItem load = new JMenuItem("Wczytaj z pliku");
-    private JMenuItem exit = new JMenuItem("Zakończ");
+    ResourceBundle bundle = Localization.bundle;
 
-    private JMenuItem clear = new JMenuItem("Wyczyść pola");
-    private JMenuItem random = new JMenuItem("Wypełnij losowo");
-    private JMenuItem exchange = new JMenuItem("Zamień miejscami");
+    private JMenuItem newfile = new JMenuItem(bundle.getString("newfile"));
+    private JMenuItem save = new JMenuItem(bundle.getString("save"));
+    private JMenuItem load = new JMenuItem(bundle.getString("load"));
+    private JMenuItem exit = new JMenuItem(bundle.getString("exit"));
+
+    private JMenuItem clear = new JMenuItem(bundle.getString("clear"));
+    private JMenuItem random = new JMenuItem(bundle.getString("random"));
+    private JMenuItem exchange = new JMenuItem(bundle.getString("exchange"));
 
 
-    private JMenuItem showHideStatusBar = new JMenuItem("Pokaż pasek stanu");
+    private JMenuItem showHideStatusBar = new JMenuItem(bundle.getString("hideshow_stat"));
 
-    private JMenuItem calculateAll = new JMenuItem("Oblicz wszystko");
-    private JMenuItem onlyAdd = new JMenuItem("Tylko dodawanie");
-    private JMenuItem onlySub = new JMenuItem("Tylko odejmowanie");
-    private JMenuItem newParam = new JMenuItem("Add i Sub jako parametry");
-    private JMenuItem onlyPositive = new JMenuItem("Losowe parametry dodatnie");
-    private JMenuItem onlyNegative = new JMenuItem("Losowe parametry ujemne");
+    private JMenuItem calculateAll = new JMenuItem(bundle.getString("calculateAll"));
+    private JMenuItem onlyAdd = new JMenuItem(bundle.getString("onlyAdd"));
+    private JMenuItem onlySub = new JMenuItem(bundle.getString("onlySub"));
+    private JMenuItem newParam = new JMenuItem(bundle.getString("newParam"));
+    private JMenuItem onlyPositive = new JMenuItem(bundle.getString("onlyPositive"));
+    private JMenuItem onlyNegative = new JMenuItem(bundle.getString("onlyNegative"));
 
     Menu(){
 

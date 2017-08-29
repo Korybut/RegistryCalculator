@@ -3,6 +3,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ResourceBundle;
 
 /**
  * Created by Korybut on 11.07.2017.
@@ -13,6 +14,8 @@ public class TextFieldsArray extends JComponent implements MouseListener{
     JTextField[][] textFields = new JTextField[8][4];
     JLabel[] labels = new JLabel[8];
     DocumentFilter sizeFilter = new SizeAndUpperFilter(4);
+
+    ResourceBundle bundle = Localization.bundle;
 
     TextFieldsArray(){
         int height = 0;
@@ -84,8 +87,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         } catch (NumberFormatException n) {
             n.printStackTrace();
             ok = false;
-            String numberFormatMsg = "W conajmniej jednym polu wprowadzono błędną wartość!";
-            JOptionPane.showMessageDialog(null, numberFormatMsg, "Błędna wartość", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, bundle.getString("number_format_msg"), bundle.getString("valid_val"), JOptionPane.ERROR_MESSAGE);
             if (errorThis == -1) {
                 getField(0, i);
             }
