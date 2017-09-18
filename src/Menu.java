@@ -18,7 +18,8 @@ class Menu extends JMenuBar {
     private JMenuItem random = new JMenuItem(bundle.getString("random"));
     private JMenuItem exchange = new JMenuItem(bundle.getString("exchange"));
 
-
+    private JMenuItem polski = new JMenuItem("Polski");
+    private JMenuItem english = new JMenuItem("English");
     private JMenuItem showHideStatusBar = new JMenuItem(bundle.getString("hideshow_stat"));
 
     private JMenuItem calculateAll = new JMenuItem(bundle.getString("calculateAll"));
@@ -30,15 +31,15 @@ class Menu extends JMenuBar {
 
     Menu(){
 
-        JMenu file = new JMenu("Plik");
+        JMenu file = new JMenu(bundle.getString("file"));
         add(file);
-        JMenu edit = new JMenu("Edycja");
+        JMenu edit = new JMenu(bundle.getString("edit"));
         add(edit);
-        JMenu view = new JMenu("Widok");
+        JMenu view = new JMenu(bundle.getString("view"));
         add(view);
-        JMenu options = new JMenu("Opcje");
+        JMenu options = new JMenu(bundle.getString("options"));
         add(options);
-        JMenu help = new JMenu("Pomoc");
+        JMenu help = new JMenu(bundle.getString("help"));
         add(help);
 
         file.add(newfile);
@@ -75,9 +76,16 @@ class Menu extends JMenuBar {
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
         exchange.setIcon(new ImageIcon(exchangeIcon));
 
-        JMenu mode = new JMenu("Tryb...");
+        JMenu mode = new JMenu(bundle.getString("mode_dots"));
         view.add(mode);
-        JMenuItem modeCalculator = new JMenuItem("Kalkulator");
+
+        JMenu language = new JMenu(bundle.getString("lang"));
+        view.add(language);
+
+        language.add(polski);
+        language.add(english);
+
+        JMenuItem modeCalculator = new JMenuItem(bundle.getString("calculator"));
         mode.add(modeCalculator);
         modeCalculator.setEnabled(false);
         JMenuItem modeTesterHex = new JMenuItem("Tester Hex");
@@ -106,11 +114,11 @@ class Menu extends JMenuBar {
         options.add(onlyNegative);
         onlyNegative.setIcon(new ImageIcon(negativeIcon));
 
-        JMenuItem helper = new JMenuItem("Pomoc");
+        JMenuItem helper = new JMenuItem(bundle.getString("help"));
         help.add(helper);
         Image aboutIcon = new ImageIcon(this.getClass().getResource("/images/helper.png")).getImage()
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
-        JMenuItem about = new JMenuItem("O programie");
+        JMenuItem about = new JMenuItem(bundle.getString("about"));
         about.setIcon(new ImageIcon(aboutIcon));
         help.add(about);
 

@@ -1,18 +1,21 @@
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * Created by Korybut on 15.07.2017.
  */
 class RightPanel extends JComponent {
 
-    JLabel titleMode = new JLabel("tryb: Kalkulator", SwingConstants.CENTER);
+    ResourceBundle bundle = Localization.bundle;
 
-    JButton butRand = new JButton("Losowe");
-    JButton butClear = new JButton("Wyczyść");
-    JButton butCalAll = new JButton("Oblicz wszystko");
-    JButton butComboBox = new JButton("przelicz");
+    JLabel titleMode = new JLabel(bundle.getString("mode"), SwingConstants.CENTER);
+
+    JButton butRand = new JButton(bundle.getString("rand"));
+    JButton butClear = new JButton(bundle.getString("clear2"));
+    JButton butCalAll = new JButton(bundle.getString("calculateAll"));
+    JButton butComboBox = new JButton(bundle.getString("calculate"));
 
     /* JComboBox */
     BoxListCalculate boxListCalculate = new BoxListCalculate();

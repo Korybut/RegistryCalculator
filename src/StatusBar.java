@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * Created by Korybut on 18.07.2017.
@@ -10,13 +11,14 @@ class StatusBar extends JComponent {
 
     private JLabel indexFieldStatus = new JLabel("0:0", SwingConstants.CENTER);
     private JLabel fileNameStatus = new JLabel("currently file is not saved ", SwingConstants.RIGHT);
+    ResourceBundle bundle = Localization.bundle;
 
     StatusBar() {
         setLayout(null);
         Border barBorder = new EtchedBorder(EtchedBorder.RAISED);
         Font barFont = new Font("Arial", Font.BOLD, 11);
 
-        JLabel modeStatus = new JLabel(" Tryb: kalkulator");
+        JLabel modeStatus = new JLabel(bundle.getString("mode"));
         add(modeStatus);
         modeStatus.setFont(barFont);
         modeStatus.setBounds(2,0,100,18);
