@@ -15,10 +15,6 @@ class EditFile {
     private JFileChooser fileChooser = new JFileChooser();
     private String notSaveInfo;
 
-    public void updateDisplay(ResourceBundle res){
-        notSaveInfo = res.getString("stat_notsave");
-    }
-
     EditFile() {
         fileChooser.setFileFilter(
                 new FileFilter() {
@@ -39,7 +35,11 @@ class EditFile {
         );
     }
 
-    void save(TextFieldsArray textFldArr, StatusBar statbr) {
+    public void updateDisplay(ResourceBundle res){
+        notSaveInfo = res.getString("stat_notsave");
+    }
+
+    public void save(TextFieldsArray textFldArr, StatusBar statbr) {
         if(statbr.getFileNameStatus().equals(notSaveInfo)){
             //if current file is not save, default save is set on desktop directory and untitled name file.
             File file = new File(System.getProperty("user.home")+"\\Desktop\\untitled");
@@ -50,7 +50,9 @@ class EditFile {
                     "user.home")+"\\Desktop\\"+statbr.getFileNameStatus().substring(0,statbr.getFileNameStatus().length()-5));
             fileChooser.setSelectedFile(fileName);
         }
+
         int retrival = fileChooser.showSaveDialog(null);
+
         if(retrival == JFileChooser.APPROVE_OPTION){
             File file;
             if(!fileChooser.getSelectedFile().toString().contains(".hex")){
@@ -81,7 +83,7 @@ class EditFile {
         }
     }
 
-    TextFieldsArray open(TextFieldsArray textFldArr, StatusBar statbr){
+    public TextFieldsArray open(TextFieldsArray textFldArr, StatusBar statbr){
         int retrival = fileChooser.showOpenDialog(null);
         if(retrival == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();

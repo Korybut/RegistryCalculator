@@ -3,9 +3,9 @@ import java.util.Random;
 /**
  * Created by Korybut on 15.07.2017.
  */
-class RandomizeHex {
+public class RandomizeHex {
 
-    String randVal = "";
+    private String randVal = "";
 
     RandomizeHex(){
         Random random = new Random();
@@ -31,6 +31,6 @@ class RandomizeHex {
         }
     }
 
-    String getRandomHex(){ return randVal.toUpperCase(); }
+    public String getRandomHex(){ return randVal.toUpperCase(); }
 
 }

@@ -9,8 +9,9 @@ import static java.lang.System.exit;
 
 /**
  * Created by Korybut on 11.07.2017.
+ * last edit 29.09.2017.
  */
-public class Frame extends JFrame implements ActionListener, MouseListener, WindowListener {
+public class Frame extends JFrame {
 
     private TextFieldsArray txtFields = new TextFieldsArray();
     private RightPanel rightPanel = new RightPanel();
@@ -32,6 +33,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
 
         super("Registry Calculator");
         setDefaultCloseOperation(Frame.DO_NOTHING_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
         pack();
         setLayout(null);
         setLocation(getSize().width/2+340, getSize().height/2+200);
@@ -41,8 +43,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         validate();
         setVisible(true);
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
-        this.addWindowListener(this);
+        addWindowListener(new WindowsAction());
 
         /* FRAMES LOOKS LIKE WINDOWS */
         try {
@@ -59,7 +60,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
 
         for(int a=0; a<8; a++){
             for(int b=0; b<4; b++){
-                txtFields.getField(a,b).addMouseListener(this);
+                txtFields.getField(a,b).addMouseListener(new MouseAction());
             }
         }
 
@@ -76,9 +77,21 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         mainMenu.setTextFieldOfItems(txtFields);
         mainMenu.getExit().addActionListener(e -> closeFrame());
         mainMenu.save(txtFields, statusBar);
-        mainMenu.getLoad().addActionListener(this);
+        mainMenu.getLoad().addActionListener(e -> {
+            editFile = new EditFile();
+            txtFields = editFile.open(txtFields, statusBar);
+        });
         mainMenu.getNewfile().addActionListener(e -> createNewFile());
-        mainMenu.getShowHideStatusBar().addActionListener(this);
+        mainMenu.getShowHideStatusBar().addActionListener(e -> {
+            if(statusBar.isVisible()) {
+                statusBar.setVisible(false);
+                setSize(565,280);
+            }
+            else {
+                statusBar.setVisible(true);
+                setSize(565,300);
+            }
+        });
         mainMenu.getPolskiItem().addActionListener(e -> setCurrentLocale(localePolish));
         mainMenu.getEnglishItem().addActionListener(e -> setCurrentLocale(localeEnglish));
 
@@ -95,7 +108,6 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         rightPanel.updateDisplay(res);
         editFile.updateDisplay(res);
         validate();
-
     }
 
     private void updateDisplay(){
@@ -104,7 +116,6 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         closeBtnMsg = res.getString("close");
         createBtnMsg = res.getString("newfile");
         statFileText = res.getString("stat_notsave");
-
     }
 
     private void closeFrame(){
@@ -125,88 +136,23 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if(e.getSource() == mainMenu.getShowHideStatusBar()){
-            if(statusBar.isVisible()) {
-                statusBar.setVisible(false);
-                setSize(565,280);
-            }
-            else {
-                statusBar.setVisible(true);
-                setSize(565,300);
-            }
-        }
-        if(e.getSource() == mainMenu.getLoad()){
-            editFile = new EditFile();
-            txtFields = editFile.open(txtFields, statusBar);
-        }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        for(int a=0; a<8; a++) {
-            for (int b = 0; b < 4; b++) {
-                if (e.getSource() == txtFields.getField(a, b)) {
-                    statusBar.setIndexFieldStatus(String.valueOf(a + ":" + b));
+    private class MouseAction extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            for(int a=0; a<8; a++) {
+                for (int b = 0; b < 4; b++) {
+                    if (e.getSource() == txtFields.getField(a, b)) {
+                        statusBar.setIndexFieldStatus(String.valueOf(a + ":" + b));
+                    }
                 }
             }
         }
     }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-        closeFrame();
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
+    private class WindowsAction extends WindowAdapter{
+        @Override
+        public void windowClosing(WindowEvent e) {
+            closeFrame();
+        }
     }
 }

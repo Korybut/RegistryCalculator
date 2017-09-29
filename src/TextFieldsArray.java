@@ -1,13 +1,13 @@
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  * Created by Korybut on 11.07.2017.
  */
-public class TextFieldsArray extends JComponent implements MouseListener{
+public class TextFieldsArray extends JComponent{
 
     private String[] labelsTitles = {"MM0", "MM1", "paddw", "paddsw", "paddusw", "psubw", "psubsw", "psubusw"};
     private JTextField[][] textFields = new JTextField[8][4];
@@ -15,6 +15,10 @@ public class TextFieldsArray extends JComponent implements MouseListener{
     private DocumentFilter sizeFilter = new SizeAndUpperFilter(4);
 
     TextFieldsArray(){
+        setFields();
+    }
+
+    public void setFields(){
         int height = 0;
         int width = 65;
         for(int a=0; a<8; a++){
@@ -28,7 +32,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
                 textFields[a][b].getPreferredSize();
                 if(a<2) textFields[a][b].setText("0000");
                 if(a>1) textFields[a][b].setEditable(false);
-                textFields[a][b].addMouseListener(this);
+                textFields[a][b].addMouseListener(new MouseAction());
                 add(textFields[a][b]);
                 // checking if that char is uppercase - if is not, change to uppercase
                 ((AbstractDocument) textFields[a][b].getDocument()).setDocumentFilter(sizeFilter);
@@ -40,13 +44,15 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void setValue(String value, int row, int col){ textFields[row][col].setText(value); }
-    String getValue(int row, int col){ return textFields[row][col].getText(); }
-    JTextField getField(int row, int col){
+    public void setValue(String value, int row, int col){ textFields[row][col].setText(value); }
+
+    public String getValue(int row, int col){ return textFields[row][col].getText(); }
+
+    public JTextField getField(int row, int col){
         return textFields[row][col];
     }
 
-    void setOnlyNegative(){
+    public void setOnlyNegative(){
         for(int a=0; a<2; a++){
             for(int b=0; b<4; b++){
                 textFields[a][b].setText(new RandomizeHex(1).getRandomHex());
@@ -54,7 +60,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void setOnlyPositive(){
+    public void setOnlyPositive(){
         for(int a=0; a<2; a++){
             for(int b=0; b<4; b++){
                 textFields[a][b].setText(new RandomizeHex(0).getRandomHex());
@@ -62,7 +68,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void setNewParameters(){
+    public void setNewParameters(){
         for(int b=0; b<4; b++){
             textFields[0][b].setText(textFields[2][b].getText());
             textFields[1][b].setText(textFields[5][b].getText());
@@ -84,7 +90,6 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         } catch (NumberFormatException n) {
             n.printStackTrace();
             ok = false;
-            //JOptionPane.showMessageDialog(null, bundle.getString("number_format_msg"), bundle.getString("valid_val"), JOptionPane.ERROR_MESSAGE);
             if (errorThis == -1) {
                 getField(0, i);
             }
@@ -92,12 +97,12 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         return ok;
     }
 
-    void calculateAll(){
+    public void calculateAll(){
         calculateOnlyAdd();
         calculateOnlySub();
     }
 
-    void calculateOnlyAdd(){
+    public void calculateOnlyAdd(){
         RegistryOperation ro = new RegistryOperation();
         for(int i=0; i<4; i++){
             if(checkInsertValue(i)){
@@ -108,7 +113,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void calculateOnlySub(){
+    public void calculateOnlySub(){
         RegistryOperation ro = new RegistryOperation();
         for(int i=0; i<4; i++){
             if(checkInsertValue(i)){
@@ -119,7 +124,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void comboBoxCalculate(int num){
+    public void comboBoxCalculate(int num){
         for(int i=0; i<4; i++) {
             if (checkInsertValue(i)) {
                 RegistryOperation ro = new RegistryOperation();
@@ -149,7 +154,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void setRandom(){
+    public void setRandom(){
         for(int a=0; a<2; a++){
             for(int b=0; b<4; b++){
                 textFields[a][b].setText(new RandomizeHex().getRandomHex());
@@ -157,7 +162,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void exchange(){
+    public void exchange(){
         for(int b=0; b<4; b++){
             String temp = textFields[0][b].getText();
             textFields[0][b].setText(textFields[1][b].getText());
@@ -165,7 +170,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    void clear(){
+    public void clear(){
         for(int a=0; a<8; a++){
             for(int b=0; b<4; b++){
                 if(a>1) textFields[a][b].setText("");
@@ -174,34 +179,18 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        for(int a=0; a<8; a++) {
-            for (int b = 0; b < 4; b++) {
-                if(e.getSource()==textFields[a][b]){
-                    textFields[a][b].selectAll();
+    private class MouseAction extends MouseAdapter{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            for(int a=0; a<8; a++) {
+                for (int b = 0; b < 4; b++) {
+                    if(e.getSource()==textFields[a][b]){
+                        textFields[a][b].selectAll();
+                    }
                 }
             }
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
 
     }
 
