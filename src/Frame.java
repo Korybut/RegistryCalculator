@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static java.lang.System.exit;
@@ -11,18 +12,21 @@ import static java.lang.System.exit;
  */
 public class Frame extends JFrame implements ActionListener, MouseListener, WindowListener {
 
-    TextFieldsArray txtFields = new TextFieldsArray();
+    private TextFieldsArray txtFields = new TextFieldsArray();
+    private RightPanel rightPanel = new RightPanel();
+    private Menu mainMenu = new Menu();
+    private StatusBar statusBar = new StatusBar();
+    private EditFile editFile = new EditFile();
+    private Locale localePolish = new Locale("pl", "PL");
+    private Locale localeEnglish = new Locale("en", "GB");
+    private Locale currentLocale;
+    private ResourceBundle res;
 
-    /* right panel with operation buttons */
-    RightPanel rightPanel = new RightPanel();
-
-    /* menu bar */
-    Menu mainMenu = new Menu();
-
-    /* status bar */
-    StatusBar statusBar = new StatusBar();
-
-    private ResourceBundle bundle = Localization.bundle;
+    private String closeMessage;
+    private String createMessage;
+    private String closeBtnMsg;
+    private String createBtnMsg;
+    private String statFileText;
 
     public Frame() throws FileNotFoundException{
 
@@ -33,6 +37,8 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         setLocation(getSize().width/2+340, getSize().height/2+200);
         setSize(565,300);
         setResizable(false);
+        setCurrentLocale(localePolish);
+        validate();
         setVisible(true);
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
@@ -73,18 +79,41 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
         mainMenu.getLoad().addActionListener(this);
         mainMenu.getNewfile().addActionListener(e -> createNewFile());
         mainMenu.getShowHideStatusBar().addActionListener(this);
+        mainMenu.getPolskiItem().addActionListener(e -> setCurrentLocale(localePolish));
+        mainMenu.getEnglishItem().addActionListener(e -> setCurrentLocale(localeEnglish));
 
         add(statusBar);
         statusBar.setBounds(0,228,565,20);
     }
 
+    public void setCurrentLocale(Locale locale){
+        currentLocale = locale;
+        res = ResourceBundle.getBundle("Bundle", currentLocale);
+        updateDisplay();
+        // update whole class strings.
+        mainMenu.updateDisplay(res);
+        rightPanel.updateDisplay(res);
+        editFile.updateDisplay(res);
+        validate();
+
+    }
+
+    private void updateDisplay(){
+        closeMessage = res.getString("close_frame");
+        createMessage = res.getString("create_newfile");
+        closeBtnMsg = res.getString("close");
+        createBtnMsg = res.getString("newfile");
+        statFileText = res.getString("stat_notsave");
+
+    }
+
     private void closeFrame(){
-        if(JOptionPane.showOptionDialog(null, bundle.getString("close_frame"), bundle.getString("close"),
+        if(JOptionPane.showOptionDialog(null, closeMessage, closeBtnMsg,
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == 0) exit(0);
     }
 
     private void createNewFile(){
-        if(JOptionPane.showOptionDialog(null,bundle.getString("create_newfile"),bundle.getString("newfile"),
+        if(JOptionPane.showOptionDialog(null,createMessage, createBtnMsg,
                 JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,null,null) == 0){
             for(int a=0; a<8; a++){
                 for(int b=0; b<4; b++){
@@ -92,7 +121,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
                     else txtFields.setValue("0000", a, b);
                 }
             }
-            statusBar.setFileNameStatus(bundle.getString("stat_notsave"));
+            statusBar.setFileNameStatus(statFileText);
         }
     }
 
@@ -110,7 +139,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener, Wind
             }
         }
         if(e.getSource() == mainMenu.getLoad()){
-            EditFile editFile = new EditFile();
+            editFile = new EditFile();
             txtFields = editFile.open(txtFields, statusBar);
         }
     }

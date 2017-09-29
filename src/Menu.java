@@ -7,39 +7,70 @@ import java.util.ResourceBundle;
  */
 class Menu extends JMenuBar {
 
-    ResourceBundle bundle = Localization.bundle;
+    private JMenuItem newfile = new JMenuItem();
+    private JMenuItem save = new JMenuItem();
+    private JMenuItem load = new JMenuItem();
+    private JMenuItem exit = new JMenuItem();
 
-    private JMenuItem newfile = new JMenuItem(bundle.getString("newfile"));
-    private JMenuItem save = new JMenuItem(bundle.getString("save"));
-    private JMenuItem load = new JMenuItem(bundle.getString("load"));
-    private JMenuItem exit = new JMenuItem(bundle.getString("exit"));
-
-    private JMenuItem clear = new JMenuItem(bundle.getString("clear"));
-    private JMenuItem random = new JMenuItem(bundle.getString("random"));
-    private JMenuItem exchange = new JMenuItem(bundle.getString("exchange"));
+    private JMenuItem clear = new JMenuItem();
+    private JMenuItem random = new JMenuItem();
+    private JMenuItem exchange = new JMenuItem();
 
     private JMenuItem polski = new JMenuItem("Polski");
     private JMenuItem english = new JMenuItem("English");
-    private JMenuItem showHideStatusBar = new JMenuItem(bundle.getString("hideshow_stat"));
+    private JMenuItem showHideStatusBar = new JMenuItem();
 
-    private JMenuItem calculateAll = new JMenuItem(bundle.getString("calculateAll"));
-    private JMenuItem onlyAdd = new JMenuItem(bundle.getString("onlyAdd"));
-    private JMenuItem onlySub = new JMenuItem(bundle.getString("onlySub"));
-    private JMenuItem newParam = new JMenuItem(bundle.getString("newParam"));
-    private JMenuItem onlyPositive = new JMenuItem(bundle.getString("onlyPositive"));
-    private JMenuItem onlyNegative = new JMenuItem(bundle.getString("onlyNegative"));
+    private JMenuItem calculateAll = new JMenuItem();
+    private JMenuItem onlyAdd = new JMenuItem();
+    private JMenuItem onlySub = new JMenuItem();
+    private JMenuItem newParam = new JMenuItem();
+    private JMenuItem onlyPositive = new JMenuItem();
+    private JMenuItem onlyNegative = new JMenuItem();
+    private JMenu file = new JMenu();
+    private JMenu edit = new JMenu();
+    private JMenu view = new JMenu();
+    private JMenu options = new JMenu();
+    private JMenu help = new JMenu();
+    private JMenu mode = new JMenu();
+    private JMenu language = new JMenu();
+    private JMenuItem modeCalculator = new JMenuItem();
+    private JMenuItem helper = new JMenuItem();
+    private JMenuItem about = new JMenuItem();
+
+    public void updateDisplay(ResourceBundle res){
+        newfile.setText(res.getString("newfile"));
+        save.setText(res.getString("save"));
+        load.setText(res.getString("load"));
+        exit.setText(res.getString("exit"));
+        clear.setText(res.getString("clear"));
+        random.setText(res.getString("random"));
+        exchange.setText(res.getString("exchange"));
+        showHideStatusBar.setText(res.getString("hideshow_stat"));
+        calculateAll.setText(res.getString("calculateAll"));
+        onlyAdd.setText(res.getString("onlyAdd"));
+        onlySub.setText(res.getString("onlySub"));
+        newParam.setText(res.getString("newParam"));
+        onlyPositive.setText(res.getString("onlyPositive"));
+        onlyNegative.setText(res.getString("onlyNegative"));
+        file.setText(res.getString("file"));
+        edit.setText(res.getString("edit"));
+        view.setText(res.getString("view"));
+        options.setText(res.getString("options"));
+        help.setText(res.getString("help"));
+        mode.setText(res.getString("mode_dots"));
+        language.setText(res.getString("lang"));
+        modeCalculator.setText(res.getString("calculator"));
+        helper.setText(res.getString("help"));
+        about.setText(res.getString("about"));
+        validate();
+    }
 
     Menu(){
 
-        JMenu file = new JMenu(bundle.getString("file"));
         add(file);
-        JMenu edit = new JMenu(bundle.getString("edit"));
         add(edit);
-        JMenu view = new JMenu(bundle.getString("view"));
         add(view);
-        JMenu options = new JMenu(bundle.getString("options"));
         add(options);
-        JMenu help = new JMenu(bundle.getString("help"));
         add(help);
 
         file.add(newfile);
@@ -76,16 +107,11 @@ class Menu extends JMenuBar {
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
         exchange.setIcon(new ImageIcon(exchangeIcon));
 
-        JMenu mode = new JMenu(bundle.getString("mode_dots"));
         view.add(mode);
-
-        JMenu language = new JMenu(bundle.getString("lang"));
         view.add(language);
 
         language.add(polski);
         language.add(english);
-
-        JMenuItem modeCalculator = new JMenuItem(bundle.getString("calculator"));
         mode.add(modeCalculator);
         modeCalculator.setEnabled(false);
         JMenuItem modeTesterHex = new JMenuItem("Tester Hex");
@@ -114,11 +140,9 @@ class Menu extends JMenuBar {
         options.add(onlyNegative);
         onlyNegative.setIcon(new ImageIcon(negativeIcon));
 
-        JMenuItem helper = new JMenuItem(bundle.getString("help"));
         help.add(helper);
         Image aboutIcon = new ImageIcon(this.getClass().getResource("/images/helper.png")).getImage()
                 .getScaledInstance(20,20,Image.SCALE_SMOOTH);
-        JMenuItem about = new JMenuItem(bundle.getString("about"));
         about.setIcon(new ImageIcon(aboutIcon));
         help.add(about);
 
@@ -147,6 +171,10 @@ class Menu extends JMenuBar {
             editFile.save(t, sb);
         });
     }
+
+    JMenuItem getPolskiItem() { return polski; }
+
+    JMenuItem getEnglishItem() { return english; }
 
     JMenuItem getLoad() {
         return load;

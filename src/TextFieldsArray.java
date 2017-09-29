@@ -3,19 +3,16 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ResourceBundle;
 
 /**
  * Created by Korybut on 11.07.2017.
  */
 public class TextFieldsArray extends JComponent implements MouseListener{
 
-    String[] labelsTitles = {"MM0", "MM1", "paddw", "paddsw", "paddusw", "psubw", "psubsw", "psubusw"};
-    JTextField[][] textFields = new JTextField[8][4];
-    JLabel[] labels = new JLabel[8];
-    DocumentFilter sizeFilter = new SizeAndUpperFilter(4);
-
-    ResourceBundle bundle = Localization.bundle;
+    private String[] labelsTitles = {"MM0", "MM1", "paddw", "paddsw", "paddusw", "psubw", "psubsw", "psubusw"};
+    private JTextField[][] textFields = new JTextField[8][4];
+    private JLabel[] labels = new JLabel[8];
+    private DocumentFilter sizeFilter = new SizeAndUpperFilter(4);
 
     TextFieldsArray(){
         int height = 0;
@@ -87,7 +84,7 @@ public class TextFieldsArray extends JComponent implements MouseListener{
         } catch (NumberFormatException n) {
             n.printStackTrace();
             ok = false;
-            JOptionPane.showMessageDialog(null, bundle.getString("number_format_msg"), bundle.getString("valid_val"), JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, bundle.getString("number_format_msg"), bundle.getString("valid_val"), JOptionPane.ERROR_MESSAGE);
             if (errorThis == -1) {
                 getField(0, i);
             }

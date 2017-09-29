@@ -8,17 +8,23 @@ import java.util.ResourceBundle;
  */
 class RightPanel extends JComponent {
 
-    ResourceBundle bundle = Localization.bundle;
-
-    JLabel titleMode = new JLabel(bundle.getString("mode"), SwingConstants.CENTER);
-
-    JButton butRand = new JButton(bundle.getString("rand"));
-    JButton butClear = new JButton(bundle.getString("clear2"));
-    JButton butCalAll = new JButton(bundle.getString("calculateAll"));
-    JButton butComboBox = new JButton(bundle.getString("calculate"));
+    private JLabel titleMode = new JLabel("title", SwingConstants.CENTER);
+    private JButton butRand = new JButton();
+    private JButton butClear = new JButton();
+    private JButton butCalAll = new JButton();
+    private JButton butComboBox = new JButton();
 
     /* JComboBox */
-    BoxListCalculate boxListCalculate = new BoxListCalculate();
+    private BoxListCalculate boxListCalculate = new BoxListCalculate();
+
+    public void updateDisplay(ResourceBundle res){
+        titleMode.setText(res.getString("mode"));
+        butRand.setText(res.getString("rand"));
+        butClear.setText(res.getString("clear2"));
+        butCalAll.setText(res.getString("calculateAll"));
+        butComboBox.setText(res.getString("calculate"));
+        validate();
+    }
 
     RightPanel(){
         setLayout(null);

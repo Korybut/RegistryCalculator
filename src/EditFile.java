@@ -12,8 +12,12 @@ import java.util.Scanner;
  */
 class EditFile {
 
-    ResourceBundle bundle = Localization.bundle;
     private JFileChooser fileChooser = new JFileChooser();
+    private String notSaveInfo;
+
+    public void updateDisplay(ResourceBundle res){
+        notSaveInfo = res.getString("stat_notsave");
+    }
 
     EditFile() {
         fileChooser.setFileFilter(
@@ -36,7 +40,7 @@ class EditFile {
     }
 
     void save(TextFieldsArray textFldArr, StatusBar statbr) {
-        if(statbr.getFileNameStatus().equals(bundle.getString("stat_notsave"))){
+        if(statbr.getFileNameStatus().equals(notSaveInfo)){
             //if current file is not save, default save is set on desktop directory and untitled name file.
             File file = new File(System.getProperty("user.home")+"\\Desktop\\untitled");
             fileChooser.setSelectedFile(file);
